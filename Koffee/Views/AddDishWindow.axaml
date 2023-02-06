@@ -1,0 +1,48 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:koffee="clr-namespace:Koffee"
+        xmlns:viewModels="clr-namespace:Koffee.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Koffee.Views.AddDishWindow"
+        Title="AddDishWindow"
+        x:Name="ThisWindow">
+        <Design.DataContext>
+                <viewModels:AddDishVM/>
+        </Design.DataContext>
+        
+        <Panel>
+        <ExperimentalAcrylicBorder>
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="Black"
+                    TintOpacity="1"
+                    MaterialOpacity="0.65"/>
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+                
+        <Border MinWidth="200" MaxWidth="500" 
+                Margin="15" Padding="30"
+                Background="#212121" 
+                VerticalAlignment="Center"  
+                CornerRadius="25">
+            <StackPanel>
+                <TextBlock FontWeight="Bold" FontSize="24" Text="Создание меню"/>
+                
+                <TextBox Watermark="Имя"
+                         Text="{Binding Name}"
+                         Margin="0,10,0,5"/>
+                
+                <TextBox Watermark="Цена #,## руб."
+                         Text="{Binding Price}"
+                         Margin="0,10,0,5"/>
+                
+                <Button Content="Добавить"
+                        Command="{Binding AddDish}"
+                        CommandParameter="{Binding ElementName=ThisWindow}"/>
+            </StackPanel>
+        </Border>
+    </Panel>
+</Window>

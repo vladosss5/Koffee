@@ -1,0 +1,66 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:koffee="clr-namespace:Koffee"
+        xmlns:viewModels="clr-namespace:Koffee.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Koffee.Views.AddEmployeeWindow"
+        Title="AddEmployeeWindow" 
+        x:Name="ThisWindow">
+    
+    <Design.DataContext>
+        <viewModels:AddEmployeeVM/>
+    </Design.DataContext>
+        
+    <Panel>
+        <ExperimentalAcrylicBorder>
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="Black"
+                    TintOpacity="1"
+                    MaterialOpacity="0.65"/>
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+                
+        <Border MinWidth="200" MaxWidth="500" 
+                Margin="15" Padding="30"
+                Background="#212121" 
+                VerticalAlignment="Center"  
+                CornerRadius="25">
+            <StackPanel>
+                <TextBlock FontWeight="Bold" FontSize="24" Text="Авторизация"/>
+                                
+                <TextBox Watermark="Логин"
+                         Text="{Binding Login}"
+                         Margin="0,10,0,5"/>
+                                
+                <TextBox Watermark="Пароль"
+                         Text="{Binding Password}"
+                         PasswordChar="*"
+                         Margin="0, 5, 0 ,10"/>
+                
+                <TextBox Watermark="Имя"
+                         Text="{Binding Name}"
+                         Margin="0, 5, 0 ,10"/>
+                
+                <TextBox Watermark="Фамилия"
+                         Text="{Binding Surename}"
+                         Margin="0, 5, 0 ,10"/>
+                
+                <TextBox Watermark="Отчество"
+                         Text="{Binding Patronymic}"
+                         Margin="0, 5, 0 ,10"/>
+                
+                <TextBox Watermark="Должность"
+                         Text="{Binding Post}"
+                         Margin="0, 5, 0 ,10"/>
+                                
+                <Button Content="Нанять"
+                        Command="{Binding AddEmployee}"
+                        CommandParameter="{Binding ElementName=ThisWindow}"/>
+            </StackPanel>
+        </Border>
+    </Panel>
+</Window>

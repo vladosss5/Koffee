@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="Koffee/App.axaml" value="Koffee/Koffee.csproj" />
+        <entry key="Koffee/ViewModels/AddEmploee.axaml" value="Koffee/Koffee.csproj" />
+        <entry key="Koffee/ViewModels/ChangePasswordVM.axaml" value="Koffee/Koffee.csproj" />
+        <entry key="Koffee/Views/AddDish.axaml" value="Koffee/Koffee.csproj" />
+        <entry key="Koffee/Views/AddDishWindow.axaml" value="Koffee/Koffee.csproj" />
+        <entry key="Koffee/Views/AddEmployeeWindow.axaml" value="Koffee/Koffee.csproj" />
+        <entry key="Koffee/Views/AdminWindow.axaml" value="Koffee/Koffee.csproj" />
+        <entry key="Koffee/Views/AuthorizationWindow.axaml" value="Koffee/Koffee.csproj" />
+        <entry key="Koffee/Views/ChangePasswordWindow.axaml" value="Koffee/Koffee.csproj" />
+        <entry key="Koffee/Views/ProfileWindow.axaml" value="Koffee/Koffee.csproj" />
+        <entry key="Koffee/Views/SellerWindow.axaml" value="Koffee/Koffee.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

@@ -1,0 +1,197 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:Koffee.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Koffee.Views.SellerWindow"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen"
+        Title="SellerWindow"
+        x:Name="ThisWindow"
+        Background="black">
+        <Design.DataContext>
+                <vm:SellerVM/>
+        </Design.DataContext>
+        
+        <Grid>
+<!-- _______________ЗАГОЛОВКИ____________________ -->
+                <Border Grid.Row="0" Grid.Column="0"
+                        Background="#2b2b2b"
+                        VerticalAlignment="Center"
+                        CornerRadius="25"
+                        Margin="10, 10, 10, 5"
+                        Height="85">
+                        <TextBlock Text="Блюда" 
+                                   FontSize="50" 
+                                   FontWeight="Bold" 
+                                   TextAlignment="Center" 
+                                   FontFamily="Times New Roman" 
+                                   Margin="10, 10, 10, 5"
+                                   Padding="5"/>
+                </Border>
+
+                <Border Grid.Column="1" Grid.ColumnSpan="2" 
+                        Background="#2b2b2b"
+                        VerticalAlignment="Center"
+                        CornerRadius="25"
+                        Margin="5"
+                        Height="85">
+                        <TextBlock Text="Предзаказ" 
+                                   FontSize="50" 
+                                   FontWeight="Bold" 
+                                   TextAlignment="Center" 
+                                   FontFamily="Times New Roman" 
+                                   Margin="10"
+                                   Padding="5"/>
+                </Border>
+                                
+                <Border Grid.Row="0" Grid.Column="3" 
+                        Background="#2b2b2b"
+                        VerticalAlignment="Center"
+                        CornerRadius="25"
+                        MinWidth="500"
+                        Margin="5"
+                        Height="85">
+                        <TextBlock Text="Заказы за смену" 
+                                   FontSize="50" 
+                                   FontWeight="Bold" 
+                                   TextAlignment="Center" 
+                                   FontFamily="Times New Roman" 
+                                   Margin="10"
+                                   Padding="5"/>
+                </Border>
+                
+<!-- _______________СПИСОК БЛЮД_______________-->
+<Border Grid.Row="1"
+        Grid.Column="0"
+        Background="#2b2b2b"
+        Grid.RowSpan="3"
+        CornerRadius="25"
+        Margin="10, 5,10, 10">
+                <DataGrid Name="ListDishes"
+                          Items="{Binding Dish}"
+                          Margin="10">
+                        <DataGrid.Columns>
+                                <DataGridTextColumn IsReadOnly="True" Header="№" Binding="{Binding IdDish}"/>
+                                <DataGridTextColumn IsReadOnly="True" Header="Название" Binding="{Binding Name}"/>
+                                <DataGridTextColumn IsReadOnly="True" Header="Цена" Binding="{Binding Price}"/>
+                                <DataGridTextColumn Header="Кол-во" Binding="{Binding Count}"/>
+                                <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                        <Button HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                                MinHeight="20" MinWidth="20" Background="#1e1038"
+                                                                Command="{Binding ElementName=ThisWindow, Path=AddDishPreorder }" 
+                                                                CommandParameter="{Binding }"/>
+                                                </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                </DataGrid>
+</Border>
+
+<!-- _______________СПИСОК ПРЕДЗАКАЗА______________ -->
+<Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="2" 
+        Background="#2b2b2b"
+        CornerRadius="25"
+        Margin="10, 5, 10,10"
+        Name="PreOrder">
+        <DataGrid Margin="10"
+                  Items="{Binding Dishes}"
+                  SelectedItem="{Binding DishInPreorder}">
+                <DataGrid.Columns>
+                        <DataGridTextColumn IsReadOnly="True" Header="Название блюда" MinWidth="120" MaxWidth="120" Binding="{Binding Name}"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="Стоимость" MinWidth="70" MaxWidth="70" Binding="{Binding Price}"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="Кол-во" MinWidth="80" MaxWidth="80" Binding="{Binding Count}"/>
+                        <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                                <Button HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                        MinHeight="20" MinWidth="20" Background="#1e1038"
+                                                        Command="{Binding ElementName=ThisWindow, Path=RemoveDishPreorder }" 
+                                                        CommandParameter="{Binding }"/>
+                                        </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                </DataGrid.Columns>    
+        </DataGrid>
+</Border>                
+
+<!-- ________________СПИСОК ЗАКАЗОВ__________________ -->
+<Border Grid.Column="3"
+        Grid.Row="1"
+        Grid.RowSpan="3"
+        Background="#2b2b2b"
+        CornerRadius="25"
+        Margin="10, 5, 10,10"
+        Name="OrderGrid">
+        <DataGrid Name="OrderList"
+                  Items="{Binding Order}"
+                  Margin="10">
+                <DataGrid.Columns>
+                        <DataGridTextColumn IsReadOnly="True" Header="№" Binding="{Binding IdOrder}"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="Цена" Binding="{Binding Price}"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="Дата" Binding="{Binding Date}"/>
+                </DataGrid.Columns>
+                <DataGrid.RowDetailsTemplate>
+                        <DataTemplate>
+                                <DataGrid Items="{Binding DishLists}" AutoGenerateColumns="False">
+                                        <DataGrid.Columns>
+                                                <DataGridTextColumn IsReadOnly="True" Header="Название блюд" Binding="{Binding IdDishNavigation.Name}"/>
+                                        </DataGrid.Columns>
+                                </DataGrid>
+                        </DataTemplate>
+                </DataGrid.RowDetailsTemplate>
+        </DataGrid>
+</Border>
+
+
+                
+<!-- ________________КНОПКИ______________ -->
+                <Button Grid.Row="0" 
+                        Grid.Column="4" 
+                        VerticalAlignment="Center"
+                        Height="85"
+                        Width="85"
+                        CornerRadius="50"
+                        Command="{Binding ButtonProfile}"
+                        CommandParameter="{Binding ElementName=ThisWindow}"
+                        Background="Transparent">
+                        <Image Source="/Assets/profile.png"/>
+                </Button>
+                
+                <Button Grid.Row="3" 
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Background="#1e1038"
+                        MinWidth="70"
+                        CornerRadius="5"
+                        Command="{Binding SubmitOrder}"
+                        CommandParameter="{Binding ElementName=ThisWindow}">
+                        <TextBlock FontSize="14" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center"
+                                FontFamily="Times New Roman">
+                                Заказать
+                        </TextBlock>
+                </Button>
+        
+                <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="350"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                        
+                <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="1400*"/>
+                        <RowDefinition Height="80*"/>
+                </Grid.RowDefinitions>
+        </Grid>
+</Window>
