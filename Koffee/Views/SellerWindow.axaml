@@ -160,6 +160,18 @@
                         Background="Transparent">
                         <Image Source="/Assets/profile.png"/>
                 </Button>
+
+                <Button Grid.Column="4"
+                        Grid.Row="1"
+                        VerticalAlignment="Center"
+                        Height="45"
+                        Width="45"
+                        CornerRadius="50"
+                        Command="{Binding ExitProfile}"
+                        CommandParameter="{Binding ElementName=ThisWindow}"
+                        Background="Transparent">
+                        <Image Source="/Assets/exit.png"/>
+                </Button>
                 
                 <Button Grid.Row="3" 
                         Grid.Column="1"

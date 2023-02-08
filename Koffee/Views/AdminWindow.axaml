@@ -3,8 +3,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:Koffee.ViewModels"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="550"
+        mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
         x:Class="Koffee.Views.AdminWindow"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen"
         x:Name="ThisWindow"
         Title="AdminWindow">
         <Design.DataContext>
@@ -12,7 +14,7 @@
         </Design.DataContext>
         
         <Grid>
-                <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
                          MaxHeight="60"
                          Orientation="Horizontal"
                          Background="#2b2b2b" VerticalAlignment="Top"
@@ -55,12 +57,24 @@
                                         Сменить пароль
                                 </Button>
                                 
+                                <Button Grid.Column="5" 
+                                        VerticalAlignment="Center"
+                                        Height="45"
+                                        Width="45"
+                                        CornerRadius="50"
+                                        Command="{Binding ExitProfile}"
+                                        CommandParameter="{Binding ElementName=ThisWindow}"
+                                        Background="Transparent">
+                                        <Image Source="/Assets/exit.png"/>
+                                </Button>
+                                
                                 <Grid.ColumnDefinitions>
                                        <ColumnDefinition Width="50"/>
                                        <ColumnDefinition Width="Auto"/>
                                        <ColumnDefinition Width="Auto"/>
                                        <ColumnDefinition Width="Auto"/>
                                        <ColumnDefinition Width="200"/>
+                                       <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions> 
                         </Grid>
                 </StackPanel>
@@ -81,7 +95,7 @@
                                    Padding="5"/>
                 </Border>
                 
-                <Border Grid.Row="1" Grid.Column="2"
+                <Border Grid.Row="1" Grid.Column="1"
                         Background="#2b2b2b"
                         VerticalAlignment="Top"
                         HorizontalAlignment="Stretch"
@@ -89,6 +103,22 @@
                         Margin="10, 5, 10, 5"
                         Height="60">
                         <TextBlock Text="Сотрудники" 
+                                   FontSize="30" 
+                                   FontWeight="Bold" 
+                                   TextAlignment="Center" 
+                                   FontFamily="Times New Roman" 
+                                   Margin="10, 10, 10, 5"
+                                   Padding="5"/>
+                </Border>
+                
+                <Border Grid.Row="1" Grid.Column="2"
+                        Background="#2b2b2b"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Stretch"
+                        CornerRadius="25"
+                        Margin="10, 5, 10, 5"
+                        Height="60">
+                        <TextBlock Text="Меню" 
                                    FontSize="30" 
                                    FontWeight="Bold" 
                                    TextAlignment="Center" 
@@ -125,7 +155,6 @@
                 
                 <Border Grid.Column="1" 
                         Grid.Row="2"
-                        Grid.ColumnSpan="2"
                         Background="#2b2b2b"
                         CornerRadius="25"
                         Margin="10, 5, 10,10"
@@ -136,8 +165,8 @@
                                 <DataGrid.Columns>
                                         <DataGridTextColumn IsReadOnly="True" Header="№" Binding="{Binding IdUser}"/>
                                         <DataGridTextColumn IsReadOnly="True" Header="Имя" Binding="{Binding Name}"/>
-                                        <DataGridTextColumn IsReadOnly="True" Header="Фамилия" Binding="{Binding Surname}"/>
-                                        <DataGridTextColumn IsReadOnly="True" Header="Отчество" Binding="{Binding Patronymic}"/>
+                                        <DataGridTextColumn IsReadOnly="True" Header="Фамилия" Binding="{Binding Patronymic}"/>
+                                        <DataGridTextColumn IsReadOnly="True" Header="Отчество" Binding="{Binding Surename}"/>
                                         <DataGridTextColumn IsReadOnly="True" Header="Часы" Binding="{Binding HoursWorked}"/>
                                         <DataGridTextColumn IsReadOnly="True" Header="Должность" Binding="{Binding Post}"/>
                                         <DataGridTemplateColumn>
@@ -145,10 +174,10 @@
                                                         <DataTemplate>
                                                                 <Button HorizontalAlignment="Center" VerticalAlignment="Center"
                                                                         Height="25" Width="25" Background="Transparent"
-                                                                        Command="{Binding ElementName=ThisWindow, Path=DellEmployee }" 
+                                                                        Command="{Binding ElementName=ThisWindow, Path=RemoveEmployee }" 
                                                                         CommandParameter="{Binding }"
                                                                         CornerRadius="50">
-                                                                        <Image Source="/Assets/edit.png"/>
+                                                                        <Image Source="/Assets/delete.png"/>
                                                                 </Button>
                                                         </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
@@ -157,23 +186,50 @@
                         </DataGrid>
                 </Border>
                 
+                <Border Grid.Row="2"
+                        Grid.Column="2"
+                        Background="#2b2b2b"
+                        CornerRadius="25"
+                        Margin="10, 5,10, 10">
+                        <DataGrid Name="ListDishes"
+                                  Items="{Binding Dish}"
+                                  Margin="10">
+                                <DataGrid.Columns>
+                                        <DataGridTextColumn IsReadOnly="True" Header="№" Binding="{Binding IdDish}"/>
+                                        <DataGridTextColumn IsReadOnly="True" Header="Название" Binding="{Binding Name}"/>
+                                        <DataGridTextColumn IsReadOnly="True" Header="Цена" Binding="{Binding Price}"/>
+                                        <!-- <DataGridTemplateColumn> -->
+                                        <!--         <DataGridTemplateColumn.CellTemplate> -->
+                                        <!--                 <DataTemplate> -->
+                                        <!--                         <Button HorizontalAlignment="Center" VerticalAlignment="Center" -->
+                                        <!--                                 Height="25" Width="25" Background="Transparent" -->
+                                        <!--                                 Command="{Binding ElementName=ThisWindow, Path=RemoveDish }"  -->
+                                        <!--                                 CommandParameter="{Binding }" -->
+                                        <!--                                 CornerRadius="50"> -->
+                                        <!--                                 <Image Source="/Assets/delete.png"/> -->
+                                        <!--                         </Button> -->
+                                        <!--                 </DataTemplate> -->
+                                        <!--         </DataGridTemplateColumn.CellTemplate> -->
+                                        <!-- </DataGridTemplateColumn> -->
+                                </DataGrid.Columns>
+                        </DataGrid>
+                </Border>
+                
                 <Button Grid.Row="3" Grid.Column="0" 
                         Command="{Binding CreateReport}" 
                         CommandParameter="{Binding ElementName=ThisWindow}" 
-                        HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        HorizontalAlignment="Center" VerticalAlignment="Top" 
                         CornerRadius="10"
-                        Height="30" Width="150" Background="#1e1038"
-                        Margin="30, 0, 5, 5">
+                        Height="30" Width="150" Background="#1e1038">
                         <TextBlock HorizontalAlignment="Center">Создать отчёт</TextBlock>
                 </Button>
                 
-                <Button Grid.Row="3" Grid.Column="0" 
+                <Button Grid.Row="3" Grid.Column="2" 
                         Command="{Binding AddDish}" 
                         CommandParameter="{Binding ElementName=ThisWindow}" 
-                        HorizontalAlignment="Right" VerticalAlignment="Top" 
+                        HorizontalAlignment="Center" VerticalAlignment="Top" 
                         CornerRadius="10" 
-                        Height="30" Width="150" Background="#1e1038"
-                        Margin="5, 0, 30, 5">
+                        Height="30" Width="150" Background="#1e1038">
                         <TextBlock HorizontalAlignment="Center">
                                 Добавить блюдо
                         </TextBlock>
@@ -182,22 +238,10 @@
                 <Button Grid.Row="3" Grid.Column="1" 
                         Command="{Binding AddEmployee}" 
                         CommandParameter="{Binding ElementName=ThisWindow}" 
-                        HorizontalAlignment="Left" VerticalAlignment="Top" 
-                        CornerRadius="10" Margin="30, 0, 0, 0"
-                        Height="30" Width="150" Background="#1e1038">
+                        HorizontalAlignment="Center" VerticalAlignment="Top" 
+                        CornerRadius="10" Height="30" Width="150" Background="#1e1038">
                         <TextBlock HorizontalAlignment="Center">
                                 Нанять сотрудника
-                        </TextBlock>
-                </Button>
-                
-                <Button Grid.Row="3" Grid.Column="1" 
-                        Command="{Binding DeleteEmployee}" 
-                        CommandParameter="{Binding ElementName=ThisWindow}" 
-                        HorizontalAlignment="Right" VerticalAlignment="Top" 
-                        CornerRadius="10" Margin="0, 0, 40, 0"
-                        Height="30" Width="150" Background="#1e1038">
-                        <TextBlock HorizontalAlignment="Center">
-                                Уволить сотрудника
                         </TextBlock>
                 </Button>
                 
@@ -208,6 +252,7 @@
                         <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                 </Grid.ColumnDefinitions>

@@ -7,7 +7,9 @@ using Koffee.Views;
 using ReactiveUI;
 using System.Linq;
 using System.IO;
+using Avalonia.Collections;
 using AvaloniaEdit.Utils;
+using Koffee.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Word = Microsoft.Office.Interop.Word;
@@ -23,6 +25,7 @@ public class AdminVM : ViewModelBase
     private User _users = new User();
     private static ObservableCollection<Dish> _dishList = new ObservableCollection<Dish>();
     private ObservableCollection<Dish> _dish;
+    private MyDbContext db = new MyDbContext();
     private static User AuthUserNow { get; set; }
     
 
@@ -63,19 +66,23 @@ public class AdminVM : ViewModelBase
     }
 
     public ReactiveCommand<Window, Unit> ButtonProfile { get; }
+    public ReactiveCommand<Window, Unit> ExitProfile { get; }
     public ReactiveCommand<Window, Unit> OpenWindowChangePassword { get; }
     public ReactiveCommand<Window, Unit> AddEmployee { get; }
     public ReactiveCommand<Window, Unit> CreateReport { get; }
     public ReactiveCommand<Window, Unit> AddDish { get; }
+    // public ReactiveCommand<Window, Unit> DellEmployee { get; }
     
 
     public AdminVM()
     {
         AuthUserNow = AuthorizationVM.AuthUser;
         ButtonProfile = ReactiveCommand.Create<Window>(OpenProfileWindow);
+        ExitProfile = ReactiveCommand.Create<Window>(ExitProfileImpl);
         AddEmployee = ReactiveCommand.Create<Window>(AddEmployeeM);
         CreateReport = ReactiveCommand.Create<Window>(CreateReportImpl);
         AddDish = ReactiveCommand.Create<Window>(AddDishM);
+        // DellEmployee = ReactiveCommand.Create<Window>(DellEmployeeW);
         OpenWindowChangePassword = ReactiveCommand.Create<Window>(OpenWindowChangePasswordImpl);
         Order = new ObservableCollection<Order>(Helper.GetContext().Orders.Include(x => x.DishLists).ToList());
         User = new ObservableCollection<User>(Helper.GetContext().Users.ToList());
@@ -159,6 +166,30 @@ public class AdminVM : ViewModelBase
         profile_window.Show();
         obj.Close();
     }
+
+    private void ExitProfileImpl(Window obj)
+    {
+        AuthUserNow = null;
+        AuthorizationWindow aw = new AuthorizationWindow();
+        aw.Show();
+        obj.Close();
+    }
+
+    public void RemoveEmployeeImpl(User user)
+    {
+        _user.Remove(user);
+        User users = db.Users.Where(o => o.IdUser == user.IdUser).FirstOrDefault();
+        db.Users.Remove(users);
+        db.SaveChanges();
+    }
+    
+    // public void RemoveDishImpl(Dish dish)
+    // {
+    //     _dish.Remove(dish);
+    //     Dish dishes = db.Dishes.Where(o => o.IdDish == dish.IdDish).FirstOrDefault();
+    //     db.Dishes.Remove(dishes);
+    //     db.SaveChanges();
+    // }
     
     private void OpenWindowChangePasswordImpl(Window obj)
     {

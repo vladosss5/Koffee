@@ -61,11 +61,14 @@ public class SellerVM : ViewModelBase
 
     public ReactiveCommand<Window, Unit> ButtonProfile { get; }
     public ReactiveCommand<Window, Unit> SubmitOrder { get; }
+    public ReactiveCommand<Window, Unit> ExitProfile { get; }
+    
 
     public SellerVM()
     {
         AuthUserNow = AuthorizationVM.AuthUser;
         ButtonProfile = ReactiveCommand.Create<Window>(OpenProfileWindow);
+        ExitProfile = ReactiveCommand.Create<Window>(ExitProfileImpl);
         SubmitOrder = ReactiveCommand.Create<Window>(SubmitOrderImpl);
         Dish = new ObservableCollection<Dish>(Helper.GetContext().Dishes.ToList());
         Order = new ObservableCollection<Order>(Helper.GetContext().Orders.Include(x => x.DishLists).ThenInclude(x => x.IdDishNavigation).ToList());
@@ -79,6 +82,14 @@ public class SellerVM : ViewModelBase
     {
         ProfileWindow profile_window = new ProfileWindow();
         profile_window.Show();
+        obj.Close();
+    }
+    
+    private void ExitProfileImpl(Window obj)
+    {
+        AuthUserNow = null;
+        AuthorizationWindow aw = new AuthorizationWindow();
+        aw.Show();
         obj.Close();
     }
 
