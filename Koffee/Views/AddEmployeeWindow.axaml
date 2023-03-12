@@ -30,7 +30,7 @@
                 VerticalAlignment="Center"  
                 CornerRadius="25">
             <StackPanel>
-                <TextBlock FontWeight="Bold" FontSize="24" Text="Авторизация"/>
+                <TextBlock FontWeight="Bold" FontSize="24" Text="Добавление сотрудника"/>
                                 
                 <TextBox Watermark="Логин"
                          Text="{Binding Login}"
